@@ -1,0 +1,120 @@
+/* ===== Base styles ===== */
+
+body {
+    padding: 0;
+    margin: 0;
+    color: var(--vscode-foreground);
+    font-family: var(--vscode-font-family);
+    font-size: var(--vscode-font-size);
+    background-color: var(--vscode-sideBar-background);
+}
+
+/* ===== Buttons ===== */
+
+button {
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    padding: 4px 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+button:hover {
+    background-color: var(--vscode-button-hoverBackground);
+}
+
+/* ===== Icon buttons ===== */
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--vscode-icon-foreground);
+    padding: 3px;
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    line-height: 0;
+}
+
+.icon-btn:hover {
+    background-color: var(--vscode-toolbar-hoverBackground);
+}
+
+/* ===== Instances container ===== */
+
+#instances {
+    padding: 10px 15px;
+}
+
+/* ===== Maya instance card ===== */
+
+.card {
+    background-color: var(--vscode-editor-background);
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-title {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-pid {
+    color: var(--vscode-descriptionForeground);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ===== Status indicators ===== */
+.status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    overflow: hidden;
+    min-width: 0;
+}
+.status-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.status-dot.connected {
+    background-color: #4ec9b0;
+}
+
+.status-dot.disconnected {
+    background-color: #f14c4c;
+}
+
+.status-text.connected {
+    color: #4ec9b0;
+}
+
+.status-text.disconnected {
+    color: #f14c4c;
+}
