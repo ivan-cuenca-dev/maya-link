@@ -24,6 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
             const port = getWorkspacePort(context);
             if (!port) {
                 vscode.window.showErrorMessage('Not connected to any Maya instance');
+                vscode.commands.executeCommand('workbench.view.extension.mayaLink');
                 return;
             }
 
@@ -67,6 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
                 const message = error instanceof Error ? error.message : 'Unknown error';
                 log(`Failed to send code to Maya: ${message}`);
                 vscode.window.showErrorMessage(`Failed to send code to Maya: ${message}`);
+                vscode.commands.executeCommand('workbench.view.extension.mayaLink');
             }
         })
     );
