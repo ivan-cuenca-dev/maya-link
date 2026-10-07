@@ -20,7 +20,7 @@ export function findOpenPorts(): Promise<number[]> {
 }
 
 // Resolve the port if something is listening, otherwise null
-function checkPort(port: number): Promise<number | null> {
+export function checkPort(port: number): Promise<number | null> {
     return new Promise((resolve) => {
         const socket = new net.Socket();
         socket.setTimeout(PROBE_TIMEOUT_MS);

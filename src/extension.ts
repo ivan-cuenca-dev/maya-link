@@ -45,10 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
                 return;
             }
 
-            // Wrap the code so a failure is reported inside Maya's Script
-            // Editor, where it can be read and debugged. The exception is
-            // deliberately not re-raised: commandPort sees a clean exit, so
-            // the socket carries nothing back and VS Code stays quiet.
+            // Report failures inside Maya, not VS Code. See DEVELOPING.md.
             const payload = [
                 'import maya.cmds as cmds',
                 'try:',
@@ -59,11 +56,9 @@ export function activate(context: vscode.ExtensionContext) {
             ].join('\n');
 
             try {
-                // antiEcho false: the wrapper is already multi-line, and
-                // skipping the prefix keeps traceback line numbers aligned
-                // with the editor.
+                // antiEcho false keeps traceback line numbers aligned with
+                // the editor; the outcome is reported in Maya, not here
                 await sendToMaya(port, payload, false);
-                // Intentionally silent — the outcome is in Maya
             } catch (error) {
                 const message = error instanceof Error ? error.message : 'Unknown error';
                 log(`Failed to send code to Maya: ${message}`);
@@ -73,5 +68,3 @@ export function activate(context: vscode.ExtensionContext) {
         })
     );
 }
-
-export function deactivate() {}

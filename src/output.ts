@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-const CHANNEL_NAME = 'Maya Link';
+const CHANNEL_NAME = 'Maya link';
 
 let channel: vscode.OutputChannel | undefined;
 

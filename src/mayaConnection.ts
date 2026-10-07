@@ -1,7 +1,6 @@
 import * as net from 'net';
 import { trace } from './output';
 
-
 export const HOST = '127.0.0.1';
 const TIMEOUT_MS = 5000;
 

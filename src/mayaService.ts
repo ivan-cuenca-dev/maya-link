@@ -4,18 +4,12 @@ import { sendToMaya } from './mayaConnection';
 import { cleanResponse } from './parse';
 import { trace } from './output';
 
-// Both queries are single lines with no import statement. That matters: when a
-// commandPort payload contains an import or spans multiple lines, Maya switches
-// to exec() semantics and always answers "None", discarding the reply. `cmds`
-// is already in commandPort's namespace for a port opened with
-// sourceType="python", so no import is needed.
-// antiEcho is false for both: they never print, and the prefix would
-// otherwise turn them into multi-line payloads.
+// Both queries must stay single lines with no import, and antiEcho must stay
+// false, or Maya answers "None" and discards the reply. See DEVELOPING.md.
 const SCENE_NAME_COMMAND = 'cmds.file(query=True, sceneName=True)';
 const VERSION_COMMAND = 'cmds.about(product=True)';
 
-// An unsaved scene reports no path, which reads better as "untitled".
-// Anything else is reduced to the bare filename.
+// An unsaved scene reports no path, which reads better as "untitled"
 function interpretSceneName(value: string): string | null {
     if (!value || value === 'None' || value === 'null') {
         return 'untitled';
@@ -26,11 +20,8 @@ function interpretSceneName(value: string): string | null {
 export class MayaService {
     private instances: MayaInstance[] = [];
 
-    /**
-     * Port restored from persisted config on first refresh. Nothing is
-     * connected until the user connects, but this lets refresh() keep the
-     * connected status across a window reload instead of resetting it.
-     */
+    // Port restored from config, so a window reload does not reset the
+    // connected status on every card
     private restoredPort: number | undefined;
 
     constructor(restoredPort?: number) {
@@ -62,10 +53,10 @@ export class MayaService {
             };
         });
 
-        // Only seed once; afterwards the in-memory list is the source of truth
+        // Only seed once; afterwards the list in memory is the source of truth
         this.restoredPort = undefined;
 
-        // Query every instance concurrently, and both queries per instance in
+        // Every instance concurrently, and both queries per instance in
         // parallel, so one unresponsive Maya cannot delay the others
         await Promise.all(
             this.instances.map(async (instance) => {
@@ -91,11 +82,10 @@ export class MayaService {
         this.instances = this.instances.map((instance) =>
             instance.port === port ? { ...instance, status: 'disconnected' } : { ...instance }
         );
-        return this.instances;
+        return this.getInstances();
     }
 
-    // Run a single-line query and clean the reply. Returns null when the port
-    // does not answer, so one unresponsive Maya never breaks the scan.
+    // Returns null when the port does not answer
     private async query(
         port: number,
         command: string,

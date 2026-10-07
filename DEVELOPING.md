@@ -75,7 +75,7 @@ npm run compile   # type-check, lint, build
 npm run watch     # same, rebuilding on change
 ```
 
-Press `F5` to launch the Extension Development Host. Set `mayaLink.debug` to `true` in settings for verbose tracing, then check the **Maya Link** output channel.
+Press `F5` to launch the Extension Development Host. Set `mayaLink.debug` to `true` in settings for verbose tracing, then check the **Maya link** output channel.
 
 To package:
 

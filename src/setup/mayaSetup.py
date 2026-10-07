@@ -1,4 +1,4 @@
-# Maya Link — run once per Maya session
+# Maya link — run once per Maya session
 # Script Editor -> Python tab -> paste -> Run Script
 
 import maya.cmds as cmds

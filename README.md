@@ -16,10 +16,10 @@ The panel scans ports 7000–7100 automatically, so it fills in on its own.
 
 | Command | What it does |
 |---|---|
-| `Maya Link: Refresh` | Rescan for Maya instances |
-| `Maya Link: Send Python to Maya` | Send the editor selection, or the whole file if nothing is selected |
-| `Maya Link: Copy Setup Script` | Copy the Python setup snippet to the clipboard |
-| `Maya Link: Show Setup Script` | Open the snippet as a Python document |
+| `Maya link: Refresh` | Rescan for Maya instances |
+| `Maya link: Send Python to Maya` | Send the editor selection, or the whole file if nothing is selected |
+| `Maya link: Copy Setup Script` | Copy the Python setup snippet to the clipboard |
+| `Maya link: Show Setup Script` | Open the snippet as a Python document |
 
 Only one instance is connected at a time. The choice is stored per workspace.
 

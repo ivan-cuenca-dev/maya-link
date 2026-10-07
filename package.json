@@ -30,12 +30,12 @@
   "main": "./dist/extension.js",
   "contributes": {
     "configuration": {
-      "title": "Maya Link",
+      "title": "Maya link",
       "properties": {
         "mayaLink.debug": {
           "type": "boolean",
           "default": false,
-          "description": "Write verbose diagnostics to the Maya Link output channel."
+          "description": "Write verbose diagnostics to the Maya link output channel."
         }
       }
     },
