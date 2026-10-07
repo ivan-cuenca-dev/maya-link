@@ -52,7 +52,7 @@ export function activate(context: vscode.ExtensionContext) {
             const payload = [
                 'import maya.cmds as cmds',
                 'try:',
-                `    exec(${JSON.stringify(code)})`,
+                `    exec(${JSON.stringify(code)}, {})`,
                 'except Exception:',
                 '    import traceback',
                 '    print(traceback.format_exc())',
