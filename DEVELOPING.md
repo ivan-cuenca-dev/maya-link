@@ -1,4 +1,4 @@
-# Developing Maya Link
+# Developing Maya link
 
 Internal notes: how the project is laid out, how to build it, and the Maya commandPort behaviours that are not obvious from the code. For installation and usage, see [README.md](README.md).
 
@@ -11,12 +11,13 @@ Internal notes: how the project is laid out, how to build it, and the Maya comma
 | `mayaService.ts` | State, refresh, connect/disconnect, scene and version queries |
 | `portScanner.ts` | Finds open ports; change the range here |
 | `mayaConnection.ts` | TCP client; host, timeout, anti-echo prefix |
+| `mayaConsole.ts` | Log path, history toggle, log removal, terminal spec |
 | `parse.ts` | Cleans commandPort replies |
 | `config.ts` | Per-workspace storage for the connected port |
-| `output.ts` | "Maya Link" output channel for diagnostics |
+| `output.ts` | "Maya link" output channel for diagnostics |
 | `setup.ts` | The setup-script commands |
 | `setup/mayaSetup.py` | The snippet users paste into Maya |
-| `panel/MayaPanel.ts` | Sidebar view, status bar, message routing |
+| `panel/MayaPanel.ts` | Sidebar view, status bar, consoles, message routing |
 | `webview/` | `index.html`, `styles.css`, `app.js` — the panel UI |
 | `esbuild.js` | Build config and copied assets |
 | `media/logo.svg` | The logo. Also the Activity Bar icon |
@@ -64,6 +65,10 @@ Maya prints the traceback to its Script Editor and swallows the exception, so co
 **Runtime asset paths must use `dist/`, not `src/`.** `.vscodeignore` excludes `src/**`, so reading from `src/` works under F5 and breaks once installed.
 
 **New static assets must be added to `COPY_FOLDERS` in `esbuild.js`** or they never reach `dist/`.
+
+**Consoles are per port, not per connection.** `consoles` is a `Map<number, Terminal>` keyed by port, so several instances can be 
+
+**The console is read-only on POSIX only.** On Windows there is no `exec` and no `trap`, so `shellPath` is PowerShell with `Get-Content -Wait -Tail 0` (`pwsh` when present, else the 5.1 that ships with Windows). There, Ctrl+C stops the console and leaves a prompt, and anything typed runs. VS Code exposes no read-only terminal API and the pty route does not render, so this is a known gap rather than something to fix. Verify any change on Windows before shipping it.
 
 **`webview/app.js` runs in a browser.** No `require()`, `fs` or `path`.
 

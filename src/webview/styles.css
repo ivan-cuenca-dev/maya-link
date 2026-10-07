@@ -82,6 +82,13 @@ button:hover {
     justify-content: space-between;
 }
 
+/* The console and ping icons, kept together on the right */
+.card-actions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
 /* ===== Status indicators ===== */
 .status {
     display: flex;
