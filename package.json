@@ -1,6 +1,7 @@
 {
   "name": "maya-link",
   "displayName": "Maya link",
+  "publisher": "IvanCuenca",
   "description": "Connect to different Maya instances from VS Code using maya.cmds.commandPort",
   "version": "0.0.1",
   "engines": {
