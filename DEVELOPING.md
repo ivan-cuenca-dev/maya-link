@@ -54,7 +54,7 @@ Maya prints the traceback to its Script Editor and swallows the exception, so co
 
 **New static assets must be added to `COPY_FOLDERS` in `esbuild.js`** or they never reach `dist/`.
 
-**Consoles are per port, not per connection.** `consoles` is a `Map<number, Terminal>` keyed by port, so several instances can be.
+**Consoles are per port, not per connection.** `consoles` is a `Map<number, Terminal>` keyed by port, so several instances can be watched at once. Connecting no longer opens one and disconnecting no longer closes it.
 
 **The console is read-only on POSIX only.** On Windows there is no `exec` and no `trap`, so `shellPath` is PowerShell with `Get-Content -Wait -Tail 0` (`pwsh` when present, else the 5.1 that ships with Windows). There, Ctrl+C stops the console and leaves a prompt, and anything typed runs. VS Code exposes no read-only terminal API and the pty route does not render, so this is a known gap rather than something to fix. Verify any change on Windows before shipping it.
 
@@ -73,7 +73,7 @@ Press `F5` to launch the Extension Development Host. Set `mayaLink.debug` to `tr
 To package:
 
 ```bash
-npm run package-vsix
+vsce package
 code --install-extension maya-link-0.0.1.vsix
 ```
 
