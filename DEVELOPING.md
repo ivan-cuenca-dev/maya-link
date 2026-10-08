@@ -33,21 +33,9 @@ cmds.file(query=True, sceneName=True)
 cmds.about(product=True)
 ```
 
-`cmds` is already in commandPort's namespace because the port is opened with `sourceType="python"`.
-
 **`sendToMaya(port, code, antiEcho)` — the prefix is for prints.** The anti-echo prefix stops the Script Editor running your code twice, but it makes the payload multi-line, which is the problem above. Connect and ping need it. The scene and version queries must pass `false`.
 
 **Maya terminates replies with a NUL byte** — `"myScene.ma\n\u0000"`. `cleanResponse()` in `parse.ts` strips quotes, newlines and NULs. Without it `"None\u0000"` fails an equality check and the scene name comes back as garbage.
-
-**Never pool the socket.** `sendToMaya` opens one connection per call on purpose. Maya does not frame its replies — `print` output and command replies interleave, so on a long-lived socket leftovers bleed into the next request:
-
-```
-send 1 -> "None"
-send 2 -> "ping 1"          ← output from send 1
-send 3 -> "Noneping 2"      ← two replies concatenated
-```
-
-Closing right after the first chunk discards the leftovers. mayaCode pools a socket and gets away with it only because it never reads a return value.
 
 **`sendCode` reports failures in Maya, not in VS Code.** The code is wrapped before sending:
 
@@ -66,7 +54,7 @@ Maya prints the traceback to its Script Editor and swallows the exception, so co
 
 **New static assets must be added to `COPY_FOLDERS` in `esbuild.js`** or they never reach `dist/`.
 
-**Consoles are per port, not per connection.** `consoles` is a `Map<number, Terminal>` keyed by port, so several instances can be 
+**Consoles are per port, not per connection.** `consoles` is a `Map<number, Terminal>` keyed by port, so several instances can be.
 
 **The console is read-only on POSIX only.** On Windows there is no `exec` and no `trap`, so `shellPath` is PowerShell with `Get-Content -Wait -Tail 0` (`pwsh` when present, else the 5.1 that ships with Windows). There, Ctrl+C stops the console and leaves a prompt, and anything typed runs. VS Code exposes no read-only terminal API and the pty route does not render, so this is a known gap rather than something to fix. Verify any change on Windows before shipping it.
 

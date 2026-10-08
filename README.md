@@ -7,7 +7,7 @@ Connect to Autodesk Maya from VS Code over `maya.cmds.commandPort`. See your ope
 ## Setup
 
 1. In VS Code run **Maya link: Copy Setup Script**
-2. Paste it into Maya's Script Editor (Python tab) and run it
+2. Paste it into Maya's Script Editor (Python tab) and run it or copy it to the userSetup.py and forget about it
 3. Click the Maya link icon in the Activity Bar
 
 The panel scans ports 7000–7100 automatically, so it fills in on its own.
@@ -24,6 +24,8 @@ The panel scans ports 7000–7100 automatically, so it fills in on its own.
 Only one instance is connected at a time. The choice is stored per workspace.
 
 The console icon on each card opens a console for that instance showing its Script Editor output. Open as many as you need — one per Maya. On Linux and macOS they are read-only: select and copy as normal, stray keys do nothing. On Windows, Ctrl+C stops a console and anything you type runs.
+
+The target icon will send a ping to the maya so you can detect if the maya you want to send the code is the correct one before connecting.
 
 ## Developing
 
